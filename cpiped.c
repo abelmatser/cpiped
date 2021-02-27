@@ -267,7 +267,8 @@ int main(int argc, char *argv[]) {
   
   // Create a capture buffer large enough to hold one period
   snd_pcm_hw_params_get_period_size(params, &frames, &dir);
-  capsize = frames * 4; // 2 bytes/sample, 2 channels
+  // capsize = frames * 4; // 2 bytes/sample, 2 channels
+  capsize = frames * 2 * channel; // 2 bytes/sample, 2 channels
   capbuffer = calloc(capsize, sizeof(char));
   scapbuffer = (int16_t*)capbuffer;
   
