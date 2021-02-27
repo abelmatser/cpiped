@@ -93,6 +93,7 @@ int main(int argc, char *argv[]) {
   char endcmd[1000] = "";
   int wrote = 0;
   int silentt = 100;
+  int channel = 2;
   
   extern char *optarg;
   extern int optind;
@@ -143,6 +144,13 @@ int main(int argc, char *argv[]) {
       silentt = atoi(optarg);
       if ((silentt < 1) || (silentt > 32767)) {
         mylog(LOG_ERR, "Invalid silence threshold. Range is 1-32767.\n");
+        goto error;
+      }
+      break;
+    case 'c':
+      channel = atoi(optarg);
+      if ((channel < 1) || (channel > 2)) {
+        mylog(LOG_ERR, "Invalid channel amount. Range is 1-2.\n");
         goto error;
       }
       break;
@@ -239,7 +247,7 @@ int main(int argc, char *argv[]) {
   snd_pcm_hw_params_any(handle, params);
   snd_pcm_hw_params_set_access(handle, params, SND_PCM_ACCESS_RW_INTERLEAVED);
   snd_pcm_hw_params_set_format(handle, params, SND_PCM_FORMAT_S16_LE);
-  snd_pcm_hw_params_set_channels(handle, params, 2);
+  snd_pcm_hw_params_set_channels(handle, params, channel);
   snd_pcm_hw_params_set_rate_near(handle, params, &val, &dir);
 
   // Set period size to 1024 frames.
