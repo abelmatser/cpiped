@@ -173,6 +173,7 @@ int main(int argc, char *argv[]) {
       " -s : command to run when sound detected\n"
       " -e : command to run when silence detected\n"
       " -t : silence threshold (1 - 32767, [100])\n"
+      " -c : amount of channels (1 - 2, [2])\n"
       " -D : daemonize\n"
       " FIFO : path to a named pipe\n", argv[0]);
     }
