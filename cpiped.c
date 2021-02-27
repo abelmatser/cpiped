@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
   signal(SIGTERM, myterm);
 
   // Process command-line options and arguments
-  while ((opt = getopt(argc, argv, "d:b:s:e:t:D")) != -1) {
+  while ((opt = getopt(argc, argv, "d:b:s:e:t:c:D")) != -1) {
     switch (opt) {
     case 'd':
       capdev = optarg;
@@ -167,7 +167,7 @@ int main(int argc, char *argv[]) {
   if (err) {
     if (!daemonize) {
       printf("\nUsage:\n %s [-d arg] [-b arg] [-s arg] "
-      "[-e arg] [-t arg] [-D] FIFO\n"
+      "[-e arg] [-t arg] [-c arg] [-D] FIFO\n"
       " -d : ALSA capture device ['default']\n"
       " -b : target buffer in seconds [.5]\n"
       " -s : command to run when sound detected\n"
