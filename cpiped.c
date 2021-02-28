@@ -63,6 +63,7 @@ int main(int argc, char *argv[]) {
   int capsize;
   snd_pcm_hw_params_t *params;
   unsigned int val = 44100;
+  unsigned int channels = 2;
   unsigned int capusec;
   int dir;
   snd_pcm_uframes_t frames;
@@ -93,7 +94,6 @@ int main(int argc, char *argv[]) {
   char endcmd[1000] = "";
   int wrote = 0;
   int silentt = 100;
-  int channel = 2;
   
   extern char *optarg;
   extern int optind;
@@ -148,9 +148,9 @@ int main(int argc, char *argv[]) {
       }
       break;
     case 'c':
-      channel = atoi(optarg);
-      if ((channel < 1) || (channel > 2)) {
-        mylog(LOG_ERR, "Invalid channel amount. Range is 1-2.\n");
+      channels = atoi(optarg);
+      if ((channels < 1) || (channels > 2)) {
+        mylog(LOG_ERR, "Invalid channels amount. Range is 1-2.\n");
         goto error;
       }
       break;
@@ -248,7 +248,7 @@ int main(int argc, char *argv[]) {
   snd_pcm_hw_params_any(handle, params);
   snd_pcm_hw_params_set_access(handle, params, SND_PCM_ACCESS_RW_INTERLEAVED);
   snd_pcm_hw_params_set_format(handle, params, SND_PCM_FORMAT_S16_LE);
-  snd_pcm_hw_params_set_channels(handle, params, channel);
+  snd_pcm_hw_params_set_channels(handle, params, channels);
   snd_pcm_hw_params_set_rate_near(handle, params, &val, &dir);
 
   // Set period size to 1024 frames.
@@ -268,7 +268,7 @@ int main(int argc, char *argv[]) {
   // Create a capture buffer large enough to hold one period
   snd_pcm_hw_params_get_period_size(params, &frames, &dir);
   // capsize = frames * 4; // 2 bytes/sample, 2 channels
-  capsize = frames * 2 * channel; // 2 bytes/sample, 2 channels
+  capsize = frames * 2 * channels; // 2 bytes/sample, 2 channels
   capbuffer = calloc(capsize, sizeof(char));
   scapbuffer = (int16_t*)capbuffer;
   
