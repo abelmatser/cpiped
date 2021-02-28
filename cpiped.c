@@ -153,6 +153,7 @@ int main(int argc, char *argv[]) {
         mylog(LOG_ERR, "Invalid channels amount. Range is 1-2.\n");
         goto error;
       }
+      mylog(LOG_INFO,"Chosen %d channels.\n",channels);
       break;
     case 'D':
       daemonize = 1;
